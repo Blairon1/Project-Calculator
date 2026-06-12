@@ -35,13 +35,14 @@ body {
 .display{
     width: 600px;
     height: 116px;
+    padding-right: 16px;
     background-color: rgb(73, 73, 73);
     display: flex;
-    justify-content: center;
+    justify-content: flex-end;
     align-items: center;
     color: white;
     font-weight: 900;
-    font-size: 48px;
+    font-size: 72px;
     border-radius: 10px;
     box-shadow: inset 0px 4px 10px 0px rgba(0, 0, 0, 0.3);
 }
