@@ -1,4 +1,6 @@
 let currentSelectionOfNums = [];
+let currentNumber = "";
+let currentOperator = "";
 
 //DOM manipulation 
 const display = document.querySelector('.display');
@@ -9,20 +11,88 @@ numButton.forEach(element => {
         //console.log("Clicked");
         let numDisplay = element.textContent; //Selected number for the display
 
-        updateDisplay(numDisplay);
-        updateSelectionOfNumbers(numDisplay);
-    })
+        
+        updateCurrentNumber(numDisplay);
+        updateDisplay(currentNumber);
+        console.log(currentNumber);
+        //updateSelectionOfNumbers(currentNumber);
+        console.log(currentSelectionOfNums);
+        console.log(`Current Operator: ${currentOperator}`);    })
 });
 
 const clearButton = document.querySelector('#clear');
 clearButton.addEventListener("click", ()=>{
     if(currentSelectionOfNums.length == 0){
+        updateDisplay("0");
+        currentNumber = "";
+        currentOperator = "";
     }else{
         currentSelectionOfNums.length = 0;
+        currentNumber = "";
+        currentOperator = "";
         updateDisplay("0");
         console.log(`Current selection of elements: ${currentSelectionOfNums}`);
     }
+    console.log(`Current Operator: ${currentOperator}`);
 });
+
+
+const equalButton = document.querySelector('#equal');
+equalButton.addEventListener("click", ()=>{
+    if(currentSelectionOfNums.length == 1){
+        updateSelectionOfNumbers(currentNumber); // Add second operand to the array of numbers
+        if(currentOperator == "+"){
+            let sum = add(currentSelectionOfNums);
+
+            // Update the values
+            currentNumber = "" + sum;
+            updateDisplay(currentNumber);
+            currentSelectionOfNums.length = 0;
+            updateSelectionOfNumbers(currentNumber);
+            currentNumber = "";
+            currentOperator = "";
+        }
+    }
+});
+
+
+
+
+
+
+const addButton = document.querySelector('#addition');
+addButton.addEventListener("click", ()=>{
+
+    // First number plus
+    if(currentSelectionOfNums.length == 0 && currentNumber.length > 0 && currentOperator != "+"){
+        currentOperator = "+";
+        updateSelectionOfNumbers(currentNumber);
+        currentNumber = "";
+        updateDisplay("0");
+
+    // First number plus *second number 
+    }else if(currentSelectionOfNums.length > 0 && currentNumber.length > 0){
+        // Update the selection of numbers with the two being used
+        /*
+        updateSelectionOfNumbers(currentNumber);
+
+        // Compute the sum
+        let sum = add(currentSelectionOfNums);
+
+        // Update the values
+        currentNumber = "" + sum;
+        updateDisplay(currentNumber);
+        currentSelectionOfNums.length = 0;
+        updateSelectionOfNumbers(currentNumber);
+        currentNumber = "";
+        currentOperator = "";
+        */
+    }        
+
+});
+
+
+
 
 
 // Display Methods
@@ -34,6 +104,10 @@ function updateDisplay(newDisplay){
 function updateSelectionOfNumbers(newNumber){
     currentSelectionOfNums.push(Number(newNumber));
     console.log(currentSelectionOfNums);
+}
+
+function updateCurrentNumber(newNumber){
+    currentNumber += newNumber;
 }
 
 
