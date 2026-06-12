@@ -14,6 +14,16 @@ numButton.forEach(element => {
     })
 });
 
+const clearButton = document.querySelector('#clear');
+clearButton.addEventListener("click", ()=>{
+    if(currentSelectionOfNums.length == 0){
+    }else{
+        currentSelectionOfNums.length = 0;
+        updateDisplay("0");
+        console.log(`Current selection of elements: ${currentSelectionOfNums}`);
+    }
+});
+
 
 // Display Methods
 function updateDisplay(newDisplay){
