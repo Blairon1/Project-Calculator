@@ -3,6 +3,28 @@ let currentSelectionOfNums = [];
 //DOM manipulation 
 const display = document.querySelector('.display');
 
+const numButton = document.querySelectorAll('.num');
+numButton.forEach(element => {
+    element.addEventListener("click", ()=>{
+        //console.log("Clicked");
+        let numDisplay = element.textContent; //Selected number for the display
+
+        updateDisplay(numDisplay);
+        updateSelectionOfNumbers(numDisplay);
+    })
+});
+
+
+// Display Methods
+function updateDisplay(newDisplay){
+    display.textContent = newDisplay;
+}
+
+// Update selection of numbers
+function updateSelectionOfNumbers(newNumber){
+    currentSelectionOfNums.push(Number(newNumber));
+    console.log(currentSelectionOfNums);
+}
 
 
 // Function operations
