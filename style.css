@@ -1,0 +1,89 @@
+body {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+.title{
+    background-color: bisque;
+    padding: 40px 20px;
+    text-align: center;
+}
+
+.container{
+    display: flex;
+    flex: 1;
+    background-color:cornsilk;
+    justify-content: center;
+    align-items: center;
+}
+
+.calculator{
+    display: flex;
+    flex-direction: column;
+}
+
+.top-section{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(0, 0, 85);
+    width: 900px;
+    height: 200px;
+}
+
+.display{
+    width: 600px;
+    height: 116px;
+    background-color: rgb(73, 73, 73);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-weight: 900;
+    font-size: 48px;
+    border-radius: 10px;
+    box-shadow: inset 0px 4px 10px 0px rgba(0, 0, 0, 0.3);
+}
+
+.bottom-section{
+    display: flex;
+    background-color: rgb(172, 203, 223);
+    width: 900px;
+    height: 700px;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.footer{
+    background-color: bisque;
+    padding: 40px 20px;
+    text-align: center;
+}
+
+.numpad{
+    display: flex;
+    flex-wrap: wrap;
+    
+    width: 600px;
+    height: 550px;
+    gap: 50px;
+    /*
+    justify-content: space-between;
+    align-content: space-between; */
+}
+
+.numpad > div{
+    width: 100px;
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(92, 147, 184);
+    color: white;
+    font-weight: 900;
+    font-size: 48px;
+    border-radius: 10px;
+    box-shadow: 0px 8px 16px -6px rgba(0, 0, 0, 0.4);
+   
+}
