@@ -50,23 +50,22 @@ function updateDisplay(newDisplay){
 }
 
 
-f
 
 // Function operations
-function add(arrayOfTwoNums){
-    return arrayOfTwoNums[0] + arrayOfTwoNums[1];
+function add(number1, number2){
+    return (number1 + number2);
 }
 
-function subtract(arrayOfTwoNums){
-    return arrayOfTwoNums[0] - arrayOfTwoNums[1];
+function subtract(number1, number2){
+    return (number1 - number2);
 }
 
-function multiply(arrayOfTwoNums){
-    return arrayOfTwoNums[0] * arrayOfTwoNums[1];
+function multiply(number1, number2){
+    return (number1 * number2);
 }
 
-function divide(arrayOfTwoNums){
-    return arrayOfTwoNums[0] / arrayOfTwoNums[1];
+function divide(number1, number2){
+    return (number1 / number2);
 }
 
 
