@@ -15,7 +15,6 @@ numButton.forEach(element => {
         updateCurrentNumber(numDisplay);
         updateDisplay(currentNumber);
         console.log(currentNumber);
-        //updateSelectionOfNumbers(currentNumber);
         console.log(currentSelectionOfNums);
         console.log(`Current Operator: ${currentOperator}`);    })
 });
@@ -37,23 +36,8 @@ clearButton.addEventListener("click", ()=>{
 });
 
 
-const equalButton = document.querySelector('#equal');
-equalButton.addEventListener("click", ()=>{
-    if(currentSelectionOfNums.length == 1){
-        updateSelectionOfNumbers(currentNumber); // Add second operand to the array of numbers
-        if(currentOperator == "+"){
-            let sum = add(currentSelectionOfNums);
-
-            // Update the values
-            currentNumber = "" + sum;
-            updateDisplay(currentNumber);
-            currentSelectionOfNums.length = 0;
-            updateSelectionOfNumbers(currentNumber);
-            currentNumber = "";
-            currentOperator = "";
-        }
-    }
-});
+const evaluate = document.querySelector('#equal');
+evaluate.addEventListener("click", evaluateExpression);
 
 
 
@@ -63,31 +47,21 @@ equalButton.addEventListener("click", ()=>{
 const addButton = document.querySelector('#addition');
 addButton.addEventListener("click", ()=>{
 
+    // First number plus *second number 
+    if(currentSelectionOfNums.length == 1 && currentNumber.length > 0 && currentOperator == "+"){
+        // Update the selection of numbers with the two being used
+        console.log("Unique path")
+        //updateSelectionOfNumbers(currentNumber);
+        evaluateExpression();
+        
+    }   
     // First number plus
-    if(currentSelectionOfNums.length == 0 && currentNumber.length > 0 && currentOperator != "+"){
+    else if(currentSelectionOfNums.length == 0 && currentNumber.length > 0 && currentOperator != "+"){
         currentOperator = "+";
         updateSelectionOfNumbers(currentNumber);
         currentNumber = "";
         updateDisplay("0");
-
-    // First number plus *second number 
-    }else if(currentSelectionOfNums.length > 0 && currentNumber.length > 0){
-        // Update the selection of numbers with the two being used
-        /*
-        updateSelectionOfNumbers(currentNumber);
-
-        // Compute the sum
-        let sum = add(currentSelectionOfNums);
-
-        // Update the values
-        currentNumber = "" + sum;
-        updateDisplay(currentNumber);
-        currentSelectionOfNums.length = 0;
-        updateSelectionOfNumbers(currentNumber);
-        currentNumber = "";
-        currentOperator = "";
-        */
-    }        
+    }     
 
 });
 
@@ -130,4 +104,23 @@ function divide(arrayOfTwoNums){
 
 function operator(arrayOfTwoNums, operation){
     return operation(arrayOfTwoNums);
+}
+
+function evaluateExpression(){
+    if(currentSelectionOfNums.length == 1){
+        console.log(`Before performing operation: ${currentSelectionOfNums}`);
+        updateSelectionOfNumbers(currentNumber); // Add second operand to the array of numbers
+        console.log(`After performing operation: ${currentSelectionOfNums}`);
+        if(currentOperator == "+"){
+            let sum = add(currentSelectionOfNums);
+
+            // Update the values
+            currentNumber = "" + sum;
+            updateDisplay(currentNumber);
+            currentSelectionOfNums.length = 0;
+            updateSelectionOfNumbers(currentNumber);
+            currentNumber = "";
+            console.log(`Final selection of numbers: ${currentSelectionOfNums}`);
+        }
+    }
 }
