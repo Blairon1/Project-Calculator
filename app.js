@@ -19,6 +19,8 @@ numButton.forEach(element => {
         console.log(`Current Operator: ${currentOperator}`);    })
 });
 
+
+
 const clearButton = document.querySelector('#clear');
 clearButton.addEventListener("click", ()=>{
     if(currentSelectionOfNums.length == 0){
