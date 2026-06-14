@@ -1,9 +1,10 @@
-// Variable Declaration 
+//       ----------------       Variable Declarartion    ------------------  //
 
+
+// Calculator States
 let ENTERING_NUMBER = "ENTERING_NUMBER";
 let OPERATOR_SELECTED = "OPERATOR_SELECTED";
 let SHOWING_RESULT = "SHOWING_RESULT";
-
 
 let currentNumber = "";
 let result = null;
@@ -23,11 +24,10 @@ numButton.forEach(element => {
             let numDisplay = element.textContent; //Selected number for the display
             updateCurrentNumber(numDisplay);
             updateDisplay(currentNumber);
-
             current_state = ENTERING_NUMBER;
                 
-            console.log("[numButton]")
-            console.table({CN: currentNumber, CS: current_state, CPO: pendingOperator, CR: result });
+            // console.log("[numButton]")
+            // console.table({CN: currentNumber, CS: current_state, CPO: pendingOperator, CR: result });
         }
    })
 });
@@ -38,8 +38,8 @@ numButton.forEach(element => {
 function clearCalculator(){
     currentNumber = ""; result = null; pendingOperator = null; current_state = null;
     updateDisplay("0");
-    console.log("CLEARED! [clearButton]");
-    console.table({CN: currentNumber, CS: current_state, CPO: pendingOperator, CR: result });
+    // console.log("CLEARED! [clearButton]");
+    // console.table({CN: currentNumber, CS: current_state, CPO: pendingOperator, CR: result });
 }
 
 const clearButton = document.querySelector('#clear'); // clear-button reference
@@ -60,18 +60,18 @@ evaluate.addEventListener("click", () =>{
 const operatorButton = document.querySelectorAll('.operator'); // num-button reference
 operatorButton.forEach(element => {
     element.addEventListener("click", ()=>{
-        if(current_state == ENTERING_NUMBER || current_state == OPERATOR_SELECTED){
-            console.log("[operatorButton] - Before handleOperator")
-            console.table({CN: currentNumber, CS: current_state, CPO: pendingOperator, CR: result });
+        if(current_state == ENTERING_NUMBER || current_state == OPERATOR_SELECTED){ 
+            // console.log("[operatorButton] - Before handleOperator")
+            // console.table({CN: currentNumber, CS: current_state, CPO: pendingOperator, CR: result });
             if(current_state == ENTERING_NUMBER){
                 handleOperator(element.textContent);
             }else if(current_state == OPERATOR_SELECTED){ // User changes mind and selects a different operation
                 handleOperator(element.textContent);
-                console.log("OPERATION SWITCHED!");
+                // console.log("OPERATION SWITCHED!");
             }
         }else if(current_state == SHOWING_RESULT){
             handleOperator(element.textContent);
-            console.log("OPERATION AFTER EQUATION!")
+            // console.log("OPERATION AFTER EQUATION!")
         }
    })
 
@@ -81,7 +81,7 @@ operatorButton.forEach(element => {
 
 
 
-// Display Methods
+// Display & Update Methods
 function updateDisplay(newDisplay){
     display.textContent = newDisplay;
 }
@@ -134,7 +134,7 @@ function operate(number1, operation, number2){
 
 
 
-// 
+// Handles operators & state transitions depended on conditions
 function handleOperator(operation){
     if((result != null && current_state == OPERATOR_SELECTED) || (result != null && current_state == SHOWING_RESULT)){
         pendingOperator = operation; 
@@ -154,12 +154,13 @@ function handleOperator(operation){
     }
    
 
-    console.log("[handleOperator]")
-    console.table({CN: currentNumber, CS: current_state, CPO: pendingOperator, CR: result });
+    // console.log("[handleOperator]")
+    // console.table({CN: currentNumber, CS: current_state, CPO: pendingOperator, CR: result });
 
 
 }
 
+// The equals sign method
 function handleEquals(){
     if(current_state == ENTERING_NUMBER){
         result = operate(result, pendingOperator, Number(currentNumber));
@@ -169,9 +170,7 @@ function handleEquals(){
             updateDisplay(result);
         }
     }
-
-
-    console.log("[handleEquals]")
-    console.table({CN: currentNumber, CS: current_state, CPO: pendingOperator, CR: result });
+    // console.log("[handleEquals]")
+    // console.table({CN: currentNumber, CS: current_state, CPO: pendingOperator, CR: result });
 }
 
