@@ -19,14 +19,16 @@ const display = document.querySelector('.display'); // display reference
 const numButton = document.querySelectorAll('.num'); // num-button reference
 numButton.forEach(element => {
     element.addEventListener("click", ()=>{
-        let numDisplay = element.textContent; //Selected number for the display
-        updateCurrentNumber(numDisplay);
-        updateDisplay(currentNumber);
+        if(current_state != SHOWING_RESULT){ // Prevents numpad after equation, must click operation
+            let numDisplay = element.textContent; //Selected number for the display
+            updateCurrentNumber(numDisplay);
+            updateDisplay(currentNumber);
 
-        current_state = ENTERING_NUMBER;
-            
-        console.log("[numButton]")
-        console.table({CN: currentNumber, CS: current_state, CPO: pendingOperator, CR: result });
+            current_state = ENTERING_NUMBER;
+                
+            console.log("[numButton]")
+            console.table({CN: currentNumber, CS: current_state, CPO: pendingOperator, CR: result });
+        }
    })
 });
 
@@ -55,13 +57,18 @@ evaluate.addEventListener("click", () =>{
 const operatorButton = document.querySelectorAll('.operator'); // num-button reference
 operatorButton.forEach(element => {
     element.addEventListener("click", ()=>{
-        console.log("[operatorButton] - Before handleOperator")
-        console.table({CN: currentNumber, CS: current_state, CPO: pendingOperator, CR: result });
-        if(current_state == ENTERING_NUMBER){
+        if(current_state == ENTERING_NUMBER || current_state == OPERATOR_SELECTED){
+            console.log("[operatorButton] - Before handleOperator")
+            console.table({CN: currentNumber, CS: current_state, CPO: pendingOperator, CR: result });
+            if(current_state == ENTERING_NUMBER){
+                handleOperator(element.textContent);
+            }else if(current_state == OPERATOR_SELECTED){ // User changes mind and selects a different operation
+                handleOperator(element.textContent);
+                console.log("OPERATION SWITCHED!");
+            }
+        }else if(current_state == SHOWING_RESULT){
             handleOperator(element.textContent);
-        }else if(current_state == OPERATOR_SELECTED){ // User changes mind and selects a different operation
-            handleOperator(element.textContent);
-            console.log("OPERATION SWITCHED!");
+            console.log("OPERATION AFTER EQUATION!")
         }
    })
 
@@ -116,7 +123,7 @@ function operate(number1, operation, number2){
 
 // 
 function handleOperator(operation){
-    if(result != null && current_state == OPERATOR_SELECTED){
+    if((result != null && current_state == OPERATOR_SELECTED) || (result != null && current_state == SHOWING_RESULT)){
         pendingOperator = operation; 
         current_state = OPERATOR_SELECTED;
     }else if(result == null){
