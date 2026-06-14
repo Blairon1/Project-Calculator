@@ -145,6 +145,7 @@ function handleOperator(operation){
         current_state = OPERATOR_SELECTED;
     }else if(result != null){
         result = operate(result, pendingOperator, Number(currentNumber));
+        updateDisplay(result);
         if(current_state != null){
             pendingOperator = operation; currentNumber = "";
             current_state = OPERATOR_SELECTED;
