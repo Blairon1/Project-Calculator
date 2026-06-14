@@ -23,7 +23,7 @@ numButton.forEach(element => {
 });
 
 
-//       ----------------       Clear and Equals expressions    ------------------  //
+//       ----------------       sClear and Equals expressions    ------------------  //
 
 const clearButton = document.querySelector('#clear'); // clear-button reference
 clearButton.addEventListener("click", ()=>{
@@ -61,6 +61,10 @@ subButton.addEventListener("click", ()=>{
     if(currentNumber.length > 0 && firstNumber == null && secondNumber == null){
         updateDisplay(currentNumber + " -");
         firstNumber = Number(currentNumber);
+        currentNumber = "";
+    }else if(firstNumber != null && secondNumber == null && currentNumber.length > 0 && operator != null){
+        secondNumber = Number(currentNumber);
+        operate(firstNumber, operator, secondNumber);
         currentNumber = "";
     }
     operator = "-";
