@@ -20,7 +20,6 @@ const numButton = document.querySelectorAll('.num'); // num-button reference
 numButton.forEach(element => {
     element.addEventListener("click", ()=>{
         if(current_state != SHOWING_RESULT){ // Prevents numpad after equation, must click operation
-            element.style.transform = scale(0.9);
             let numDisplay = element.textContent; //Selected number for the display
             updateCurrentNumber(numDisplay);
             updateDisplay(currentNumber);
@@ -123,7 +122,8 @@ function operate(number1, operation, number2){
             alert("You Can't Divide by 0! Try Again.");
             clearCalculator();
         }else{
-            return divide(number1,number2);
+            let quotient = divide(number1,number2).toFixed(5); // Rouund to the 5th decimal placement
+            return Number(quotient);
         }
     }
 }
