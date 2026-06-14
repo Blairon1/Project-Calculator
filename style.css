@@ -90,7 +90,7 @@ body {
    
 }
 
-.num:hover, .numsub:hover, .numadd:hover, .numequal:hover, .nummult:hover, .numdivide:hover, .num-clear:hover {
+.operator:hover, .num:hover, .num-clear:hover, .numequal:hover {
     filter: brightness(80%); 
     cursor: pointer;
 }

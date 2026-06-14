@@ -1,10 +1,14 @@
-let firstNumber = null;
-let secondNumber = null;
+// Variable Declaration 
 
-let lastOperator = null;
-let operator = null;
+let ENTERING_NUMBER = "ENTERING_NUMBER";
+let OPERATOR_SELECTED = "OPERATOR_SELECTED";
+let SHOWING_RESULT = "SHOWING_RESULT";
+
 
 let currentNumber = "";
+let result = null;
+let pendingOperator = null;
+let current_state = null;
 
 
 
@@ -17,82 +21,46 @@ numButton.forEach(element => {
     element.addEventListener("click", ()=>{
         let numDisplay = element.textContent; //Selected number for the display
         updateCurrentNumber(numDisplay);
-        console.log(`Clicked| Current Number: ${currentNumber}`);
         updateDisplay(currentNumber);
+
+        current_state = ENTERING_NUMBER;
+        console.log(`[numButton] Current Number: ${currentNumber} | Current State: ${current_state} |
+            Current Pending Operator: ${pendingOperator} | Current Result: ${result}`);
    })
 });
 
 
-//       ----------------       sClear and Equals expressions    ------------------  //
+//       ----------------       Clear and Equals expressions    ------------------  //
 
 const clearButton = document.querySelector('#clear'); // clear-button reference
 clearButton.addEventListener("click", ()=>{
-    firstNumber = null; secondNumber = null; currentNumber = ""; operator = null; 
+    currentNumber = ""; result = null; pendingOperator = null; current_state = null;
     updateDisplay("0");
+    console.log("CLEARED!");
 });
 
 
 const evaluate = document.querySelector('#equal'); // equal-button reference
 evaluate.addEventListener("click", () =>{
-   if(firstNumber != null && operator != null && currentNumber.length > 0){
-    secondNumber = Number(currentNumber);
-    operate(firstNumber,operator,secondNumber);
-   }
+    if(current_state == ENTERING_NUMBER && pendingOperator != null && result != null){
+        handleEquals();
+    }
 });
 
 
 
 //       ----------------       Operation Events    ------------------  //
 
-
-const addButton = document.querySelector('#addition');
-addButton.addEventListener("click", ()=>{
-    if(currentNumber.length > 0 && firstNumber == null && secondNumber == null){
-        updateDisplay(currentNumber + " +");
-        firstNumber = Number(currentNumber);
-        currentNumber = "";
-    }
-    operator = "+";
-});
-
-
-const subButton = document.querySelector('#sub');
-subButton.addEventListener("click", ()=>{
-    if(currentNumber.length > 0 && firstNumber == null && secondNumber == null){
-        updateDisplay(currentNumber + " -");
-        firstNumber = Number(currentNumber);
-        currentNumber = "";
-    }else if(firstNumber != null && secondNumber == null && currentNumber.length > 0 && operator != null){
-        secondNumber = Number(currentNumber);
-        operate(firstNumber, operator, secondNumber);
-        currentNumber = "";
-    }
-    operator = "-";
+const numOperator = document.querySelectorAll('.operator'); // num-button reference
+numOperator.forEach(element => {
+    element.addEventListener("click", ()=>{
+        if(current_state == ENTERING_NUMBER){
+            handleOperator(element.textContent);
+        }    
+   })
 
 });
 
-const multButton = document.querySelector('#mult');
-multButton.addEventListener("click", ()=>{
-    if(currentNumber.length > 0 && firstNumber == null && secondNumber == null){
-        updateDisplay(currentNumber + " x");
-        firstNumber = Number(currentNumber);
-        currentNumber = "";
-    }
-    operator = "x";
-
-});
-
-
-const divideButton = document.querySelector('#divide');
-divideButton.addEventListener("click", ()=>{
-    if(currentNumber.length > 0 && firstNumber == null && secondNumber == null){
-        updateDisplay(currentNumber + " /");
-        firstNumber = Number(currentNumber);
-        currentNumber = "";
-    }
-    operator = "/";
-
-});
 
 
 
@@ -124,20 +92,47 @@ function divide(number1, number2){
     return (number1 / number2);
 }
 
-
-// Method to evaluate expressions based on
+// Method to evaluate expressions 
 function operate(number1, operation, number2){
     if(operation == "+"){
-        firstNumber = add(number1,number2);
-        updateDisplay(firstNumber);
+        return add(number1, number2);
     }else if(operation == "-"){
-        firstNumber = subtract(number1,number2);
-        updateDisplay(firstNumber);
+        return subtract(number1, number2);
     }else if(operation == "x"){
-        firstNumber = multiply(number1,number2);
-        updateDisplay(firstNumber);
+        return multiply(number1, number2);
     }else if(operation == "/"){
-        firstNumber = divide(number1,number2);
-        updateDisplay(firstNumber);
+        return divide(number1,number2);
     }
 }
+
+
+
+
+// 
+function handleOperator(operation){
+    if(result == null){
+        result = Number(currentNumber);
+        pendingOperator = operation; currentNumber = "";
+        current_state = OPERATOR_SELECTED;
+    }else if(result != null){
+        result = operate(result, pendingOperator, Number(currentNumber));
+        pendingOperator = operation; currentNumber = "";
+        current_state = OPERATOR_SELECTED;
+    }
+    console.log(`[handleOperator] Current Number: ${currentNumber} | Current State: ${current_state} | 
+        Current Pending Operator: ${pendingOperator} | Current Result: ${result}`);
+
+
+}
+
+function handleEquals(){
+    if(current_state == ENTERING_NUMBER){
+        result = operate(result, pendingOperator, Number(currentNumber));
+        pendingOperator = null; currentNumber = "";
+        current_state = SHOWING_RESULT;
+        updateDisplay(result);
+    }
+    console.log(`[handleEquals] Current Number: ${currentNumber} | Current State: ${current_state} | 
+        Current Pending Operator: ${pendingOperator} | Current Result: ${result}`);
+}
+
