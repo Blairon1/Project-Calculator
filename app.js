@@ -20,6 +20,7 @@ const numButton = document.querySelectorAll('.num'); // num-button reference
 numButton.forEach(element => {
     element.addEventListener("click", ()=>{
         if(current_state != SHOWING_RESULT){ // Prevents numpad after equation, must click operation
+            element.style.transform = scale(0.9);
             let numDisplay = element.textContent; //Selected number for the display
             updateCurrentNumber(numDisplay);
             updateDisplay(currentNumber);

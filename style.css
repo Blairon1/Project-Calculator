@@ -69,9 +69,6 @@ body {
     width: 600px;
     height: 550px;
     gap: 50px;
-    /*
-    justify-content: space-between;
-    align-content: space-between; */
 }
 
 .numpad > div{
@@ -93,4 +90,22 @@ body {
 .operator:hover, .num:hover, .num-clear:hover, .numequal:hover {
     filter: brightness(80%); 
     cursor: pointer;
+}
+
+
+/*
+Button styling to make selections more user friendly
+*/
+.num,
+.operator,
+.numequal,
+.num-clear {
+    transition: transform 0.1s;
+}
+
+.num:active,
+.operator:active,
+.numequal:active,
+.num-clear:active {
+    transform: scale(0.92);
 }
