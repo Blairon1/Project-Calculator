@@ -59,19 +59,34 @@ addButton.addEventListener("click", ()=>{
 
 const subButton = document.querySelector('#sub');
 subButton.addEventListener("click", ()=>{
+    if(currentNumber.length > 0 && firstNumber == null && secondNumber == null){
+        updateDisplay(currentNumber + " -");
+        firstNumber = Number(currentNumber);
+        currentNumber = "";
+    }
     operator = "-";
 
 });
 
 const multButton = document.querySelector('#mult');
 multButton.addEventListener("click", ()=>{
-   operator = "x";
+    if(currentNumber.length > 0 && firstNumber == null && secondNumber == null){
+        updateDisplay(currentNumber + " x");
+        firstNumber = Number(currentNumber);
+        currentNumber = "";
+    }
+    operator = "x";
 
 });
 
 
 const divideButton = document.querySelector('#divide');
 divideButton.addEventListener("click", ()=>{
+    if(currentNumber.length > 0 && firstNumber == null && secondNumber == null){
+        updateDisplay(currentNumber + " /");
+        firstNumber = Number(currentNumber);
+        currentNumber = "";
+    }
     operator = "/";
 
 });
@@ -111,6 +126,15 @@ function divide(number1, number2){
 function operate(number1, operation, number2){
     if(operation == "+"){
         firstNumber = add(number1,number2);
+        updateDisplay(firstNumber);
+    }else if(operation == "-"){
+        firstNumber = subtract(number1,number2);
+        updateDisplay(firstNumber);
+    }else if(operation == "x"){
+        firstNumber = multiply(number1,number2);
+        updateDisplay(firstNumber);
+    }else if(operation == "/"){
+        firstNumber = divide(number1,number2);
         updateDisplay(firstNumber);
     }
 }
