@@ -24,8 +24,9 @@ numButton.forEach(element => {
         updateDisplay(currentNumber);
 
         current_state = ENTERING_NUMBER;
-        console.log(`[numButton] Current Number: ${currentNumber} | Current State: ${current_state} |
-            Current Pending Operator: ${pendingOperator} | Current Result: ${result}`);
+            
+        console.log("[numButton]")
+        console.table({CN: currentNumber, CS: current_state, CPO: pendingOperator, CR: result });
    })
 });
 
@@ -51,12 +52,17 @@ evaluate.addEventListener("click", () =>{
 
 //       ----------------       Operation Events    ------------------  //
 
-const numOperator = document.querySelectorAll('.operator'); // num-button reference
-numOperator.forEach(element => {
+const operatorButton = document.querySelectorAll('.operator'); // num-button reference
+operatorButton.forEach(element => {
     element.addEventListener("click", ()=>{
+        console.log("[operatorButton] - Before handleOperator")
+        console.table({CN: currentNumber, CS: current_state, CPO: pendingOperator, CR: result });
         if(current_state == ENTERING_NUMBER){
             handleOperator(element.textContent);
-        }    
+        }else if(current_state == OPERATOR_SELECTED){ // User changes mind and selects a different operation
+            handleOperator(element.textContent);
+            console.log("OPERATION SWITCHED!");
+        }
    })
 
 });
@@ -98,7 +104,7 @@ function operate(number1, operation, number2){
         return add(number1, number2);
     }else if(operation == "-"){
         return subtract(number1, number2);
-    }else if(operation == "x"){
+    }else if(operation == "X"){
         return multiply(number1, number2);
     }else if(operation == "/"){
         return divide(number1,number2);
@@ -110,7 +116,10 @@ function operate(number1, operation, number2){
 
 // 
 function handleOperator(operation){
-    if(result == null){
+    if(result != null && current_state == OPERATOR_SELECTED){
+        pendingOperator = operation; 
+        current_state = OPERATOR_SELECTED;
+    }else if(result == null){
         result = Number(currentNumber);
         pendingOperator = operation; currentNumber = "";
         current_state = OPERATOR_SELECTED;
@@ -119,8 +128,10 @@ function handleOperator(operation){
         pendingOperator = operation; currentNumber = "";
         current_state = OPERATOR_SELECTED;
     }
-    console.log(`[handleOperator] Current Number: ${currentNumber} | Current State: ${current_state} | 
-        Current Pending Operator: ${pendingOperator} | Current Result: ${result}`);
+   
+
+    console.log("[handleOperator]")
+    console.table({CN: currentNumber, CS: current_state, CPO: pendingOperator, CR: result });
 
 
 }
@@ -132,7 +143,9 @@ function handleEquals(){
         current_state = SHOWING_RESULT;
         updateDisplay(result);
     }
-    console.log(`[handleEquals] Current Number: ${currentNumber} | Current State: ${current_state} | 
-        Current Pending Operator: ${pendingOperator} | Current Result: ${result}`);
+
+
+    console.log("[handleEquals]")
+    console.table({CN: currentNumber, CS: current_state, CPO: pendingOperator, CR: result });
 }
 
