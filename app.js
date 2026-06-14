@@ -112,17 +112,20 @@ function divide(number1, number2){
 // Method to evaluate expressions 
 function operate(number1, operation, number2){
     if(operation == "+"){
-        return add(number1, number2);
+        let sum = add(number1,number2).toFixed(5);
+        return Number(sum);
     }else if(operation == "-"){
-        return subtract(number1, number2);
+        let difference = subtract(number1,number2).toFixed(5); 
+        return Number(difference);
     }else if(operation == "X"){
-        return multiply(number1, number2);
+        let product = multiply(number1,number2).toFixed(5); 
+        return Number(product);
     }else if(operation == "/"){
         if(number2 == 0){
             alert("You Can't Divide by 0! Try Again.");
             clearCalculator();
         }else{
-            let quotient = divide(number1,number2).toFixed(5); // Rouund to the 5th decimal placement
+            let quotient = divide(number1,number2).toFixed(5); 
             return Number(quotient);
         }
     }
