@@ -35,12 +35,15 @@ numButton.forEach(element => {
 
 //       ----------------       Clear and Equals expressions    ------------------  //
 
-const clearButton = document.querySelector('#clear'); // clear-button reference
-clearButton.addEventListener("click", ()=>{
+function clearCalculator(){
     currentNumber = ""; result = null; pendingOperator = null; current_state = null;
     updateDisplay("0");
-    console.log("CLEARED!");
-});
+    console.log("CLEARED! [clearButton]");
+    console.table({CN: currentNumber, CS: current_state, CPO: pendingOperator, CR: result });
+}
+
+const clearButton = document.querySelector('#clear'); // clear-button reference
+clearButton.addEventListener("click", clearCalculator);
 
 
 const evaluate = document.querySelector('#equal'); // equal-button reference
@@ -103,6 +106,7 @@ function multiply(number1, number2){
 
 function divide(number1, number2){
     return (number1 / number2);
+    
 }
 
 // Method to evaluate expressions 
@@ -114,7 +118,12 @@ function operate(number1, operation, number2){
     }else if(operation == "X"){
         return multiply(number1, number2);
     }else if(operation == "/"){
-        return divide(number1,number2);
+        if(number2 == 0){
+            alert("You Can't Divide by 0! Try Again.");
+            clearCalculator();
+        }else{
+            return divide(number1,number2);
+        }
     }
 }
 
@@ -132,8 +141,11 @@ function handleOperator(operation){
         current_state = OPERATOR_SELECTED;
     }else if(result != null){
         result = operate(result, pendingOperator, Number(currentNumber));
-        pendingOperator = operation; currentNumber = "";
-        current_state = OPERATOR_SELECTED;
+        if(current_state != null){
+            pendingOperator = operation; currentNumber = "";
+            current_state = OPERATOR_SELECTED;
+        }
+
     }
    
 
@@ -146,9 +158,11 @@ function handleOperator(operation){
 function handleEquals(){
     if(current_state == ENTERING_NUMBER){
         result = operate(result, pendingOperator, Number(currentNumber));
-        pendingOperator = null; currentNumber = "";
-        current_state = SHOWING_RESULT;
-        updateDisplay(result);
+        if(current_state != null){
+            pendingOperator = null; currentNumber = "";
+            current_state = SHOWING_RESULT;
+            updateDisplay(result);
+        }
     }
 
 
