@@ -19,8 +19,6 @@ numButton.forEach(element => {
         updateCurrentNumber(numDisplay);
         console.log(`Clicked| Current Number: ${currentNumber}`);
         updateDisplay(currentNumber);
-
-
    })
 });
 
@@ -29,7 +27,8 @@ numButton.forEach(element => {
 
 const clearButton = document.querySelector('#clear'); // clear-button reference
 clearButton.addEventListener("click", ()=>{
-    
+    firstNumber = null; secondNumber = null; currentNumber = ""; operator = null; 
+    updateDisplay("0");
 });
 
 
